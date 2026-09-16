@@ -4,7 +4,7 @@ window.setTimeout(() => {
 
 const photoGroups = [
   { ids: ['1room', '1room2', '2room', '2room2', '2room3', '2roombath', '2roombath2', '3room', '3room1', '3room2', '3room3', '3roombath', '3roombath2', '3roombath3', 'bath', 'booknook'], caption: 'Rooms at Mystic Dreamville', tags: ['rooms'] },
-  { ids: ['pool', 'pool2', 'pool3', 'pool4', 'pool5', 'pool6', 'pool7', 'pool10', 'pool11', 'pool12', 'pool15'], caption: 'The private swimming pool', tags: ['pool', 'outdoors'] },
+  { ids: ['pool', 'pool2', 'pool3', 'pool4', 'pool5', 'pool6', 'pool7', 'pool10', 'pool11', 'pool12', 'pool15'], caption: 'The private swimming pool', tags: ['pool'] },
   { ids: ['bbq', 'bbq2', 'bbq3', 'bbq4'], caption: 'Barbecue time at the villa', tags: ['bbq', 'outdoors'] },
   { ids: ['gazebo', 'gazebo1', 'gazebo2', 'gazebo3', 'gazebo5', 'gazebo6', 'gazebo7', 'gazebo8', 'gazebo10'], caption: 'Poolside gazebo and outdoor seating', tags: ['bbq', 'outdoors'] },
   { ids: ['livingroom1', 'livingroom2', 'livingroom3', 'livingroom4', 'livingroom44', 'livingroom6', 'livingroom7', 'livingroom8', 'livingroom9', 'livingroom10'], caption: 'Space to gather in the living room', tags: ['living'] },
