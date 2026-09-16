@@ -2,37 +2,102 @@ window.setTimeout(() => {
   document.getElementById('hero-title')?.classList.add('is-hidden');
 }, 8000);
 
-const photos = [
-  ['pool12', 'Your private swimming pool'], ['3room', 'A spacious, light-filled bedroom'],
-  ['gazebo10', 'Poolside gazebo and outdoor seating'], ['house', 'Welcome to Mystic Dreamville'],
-  ['pool10', 'The pool after sundown'], ['2room', 'A comfortable bedroom to unwind in'],
-  ['1room', 'A cosy room for quiet mornings'], ['livingroom2', 'Space to gather in the living room'],
-  ['kitchen', 'A fully equipped kitchen'], ['booknook', 'A quiet little reading corner'],
-  ['bath', 'Bathroom at the villa'], ['2balcony', 'Step out onto your private balcony']
+const photoGroups = [
+  { ids: ['1room', '1room2', '2room', '2room2', '2room3', '2roombath', '2roombath2', '3room', '3room1', '3room2', '3room3', '3roombath', '3roombath2', '3roombath3', 'bath', 'booknook'], caption: 'Rooms at Mystic Dreamville', tags: ['rooms'] },
+  { ids: ['pool', 'pool2', 'pool3', 'pool4', 'pool5', 'pool6', 'pool7', 'pool10', 'pool11', 'pool12', 'pool15'], caption: 'The private swimming pool', tags: ['pool', 'outdoors'] },
+  { ids: ['bbq', 'bbq2', 'bbq3', 'bbq4'], caption: 'Barbecue time at the villa', tags: ['bbq', 'outdoors'] },
+  { ids: ['gazebo', 'gazebo1', 'gazebo2', 'gazebo3', 'gazebo5', 'gazebo6', 'gazebo7', 'gazebo8', 'gazebo10'], caption: 'Poolside gazebo and outdoor seating', tags: ['bbq', 'outdoors'] },
+  { ids: ['livingroom1', 'livingroom2', 'livingroom3', 'livingroom4', 'livingroom44', 'livingroom6', 'livingroom7', 'livingroom8', 'livingroom9', 'livingroom10'], caption: 'Space to gather in the living room', tags: ['living'] },
+  { ids: ['dining', 'dining2', 'kitchen'], caption: 'Kitchen and dining spaces', tags: ['living'] },
+  { ids: ['2balcony', 'balcony', 'balcony2', 'outside', 'outside2', 'house', 'terrace2'], caption: 'Outdoor spaces at Mystic Dreamville', tags: ['outdoors'] }
 ];
+const photos = photoGroups.flatMap(group => group.ids.map(id => ({ id, caption: group.caption, tags: group.tags })));
 const gallery = document.getElementById('gallery');
-photos.slice(3).forEach(([id, caption]) => {
+const mobileGallery = window.matchMedia('(max-width: 800px)');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let activeFilter = 'all';
+let galleryVisible = true;
+let galleryTimer;
+
+function shuffled(items) {
+  return [...items].sort(() => Math.random() - 0.5);
+}
+function filteredPhotos() {
+  return activeFilter === 'all' ? photos : photos.filter(photo => photo.tags.includes(activeFilter));
+}
+function createGalleryCard(photo) {
   const button = document.createElement('button');
   button.className = 'gallery-photo';
-  button.dataset.photo = id;
-  button.setAttribute('aria-label', `View ${caption.toLowerCase()}`);
+  button.dataset.photo = photo.id;
+  button.setAttribute('aria-label', `View ${photo.caption.toLowerCase()}`);
   const img = document.createElement('img');
-  img.src = `images/${id}.webp`; img.alt = caption; img.loading = 'lazy'; img.width = 720; img.height = 720;
-  const label = document.createElement('span'); label.textContent = caption;
-  button.append(img, label); gallery.append(button);
-});
+  img.src = `images/${photo.id}.webp`;
+  img.alt = photo.caption;
+  img.loading = 'lazy';
+  img.width = 720;
+  img.height = 540;
+  button.append(img);
+  return button;
+}
+function renderGallery() {
+  const slotCount = mobileGallery.matches ? 6 : 8;
+  const selection = shuffled(filteredPhotos()).slice(0, slotCount);
+  gallery.replaceChildren(...selection.map(createGalleryCard));
+}
+function flipRandomPhoto() {
+  if (!galleryVisible || document.hidden) return;
+  const cards = [...gallery.querySelectorAll('.gallery-photo')];
+  const candidates = filteredPhotos();
+  if (!cards.length || candidates.length < 2) return;
+  const card = cards[Math.floor(Math.random() * cards.length)];
+  const visibleIds = new Set(cards.map(item => item.dataset.photo));
+  const replacements = candidates.filter(photo => !visibleIds.has(photo.id));
+  const pool = replacements.length ? replacements : candidates.filter(photo => photo.id !== card.dataset.photo);
+  const next = pool[Math.floor(Math.random() * pool.length)];
+  card.classList.add('is-flipping');
+  window.setTimeout(() => {
+    const img = card.querySelector('img');
+    card.dataset.photo = next.id;
+    card.setAttribute('aria-label', `View ${next.caption.toLowerCase()}`);
+    img.src = `images/${next.id}.webp`;
+    img.alt = next.caption;
+    card.classList.remove('is-flipping');
+  }, reducedMotion.matches ? 0 : 260);
+}
+function restartGalleryTimer() {
+  window.clearInterval(galleryTimer);
+  galleryTimer = window.setInterval(flipRandomPhoto, 1500);
+}
+document.querySelectorAll('[data-gallery-filter]').forEach(button => button.addEventListener('click', () => {
+  activeFilter = button.dataset.galleryFilter;
+  document.querySelectorAll('[data-gallery-filter]').forEach(item => {
+    const selected = item === button;
+    item.classList.toggle('is-active', selected);
+    item.setAttribute('aria-pressed', String(selected));
+  });
+  renderGallery();
+  restartGalleryTimer();
+}));
+mobileGallery.addEventListener('change', renderGallery);
+new IntersectionObserver(entries => { galleryVisible = entries[0]?.isIntersecting ?? true; }, { rootMargin: '200px' }).observe(gallery);
+renderGallery();
+restartGalleryTimer();
+
 let activePhoto = 0;
 const photoDialog = document.getElementById('photo-dialog');
 function showPhoto(index) {
   activePhoto = (index + photos.length) % photos.length;
-  const [id, caption] = photos[activePhoto];
+  const { id, caption } = photos[activePhoto];
   const photo = document.getElementById('dialog-photo'); photo.src = `images/${id}.webp`; photo.alt = caption;
   document.getElementById('dialog-caption').textContent = caption;
   document.getElementById('photo-count').textContent = `${activePhoto + 1} / ${photos.length}`;
 }
-document.querySelectorAll('[data-photo]').forEach(button => button.addEventListener('click', () => {
-  showPhoto(photos.findIndex(([id]) => id === button.dataset.photo)); photoDialog.showModal();
-}));
+document.addEventListener('click', event => {
+  const button = event.target.closest('[data-photo]');
+  if (!button) return;
+  showPhoto(photos.findIndex(photo => photo.id === button.dataset.photo));
+  photoDialog.showModal();
+});
 document.getElementById('photo-prev').addEventListener('click', () => showPhoto(activePhoto - 1));
 document.getElementById('photo-next').addEventListener('click', () => showPhoto(activePhoto + 1));
 photoDialog.addEventListener('keydown', event => {

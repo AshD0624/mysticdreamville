@@ -18,7 +18,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="header">
     <a class="brand" href="#" aria-label="Mystic Dreamville home"><img src="images/logo.png" width="52" height="54" alt=""><span>MYSTIC DREAMVILLE<small>PRIVATE POOL VILLA · LONAVALA</small></span></a>
-    <nav aria-label="Main navigation"><a href="#spaces">The villa</a><a href="#amenities">Amenities</a><a href="#reviews">Guest stories</a><a href="#location">Find us</a></nav>
+    <nav aria-label="Main navigation"><a href="#spaces">The villa</a><a href="#gallery-section">Gallery</a><a href="#amenities">Amenities</a><a href="#reviews">Guest stories</a><a href="#location">Find us</a></nav>
     <a class="button header-book" href="https://wa.me/919137386405?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20a%20stay%20at%20Mystic%20Dreamville." target="_blank" rel="noopener">Check dates <span aria-hidden="true">↗</span></a>
   </header>
   <main id="main">
@@ -30,12 +30,22 @@
     <section class="section spaces" id="spaces">
       <div class="section-heading"><div><p class="eyebrow">A HOME, WITH ROOM TO UNWIND</p><h2>Your people.<br>Your own little world.</h2></div><p>Come together in a spacious three-bedroom villa. Spread out, settle in, and make yourselves at home.</p></div>
       <div class="spaces-grid">
-        <article class="space-card space-main"><button class="photo-button" data-photo="pool12" aria-label="View private swimming pool photograph"><img src="images/pool12.webp" width="1440" height="1080" loading="lazy" alt="Clear blue water in the villa’s private swimming pool"><span class="photo-expand" aria-hidden="true">↗</span></button><div class="space-caption"><span class="number">01</span><div><h3>Pool days. Your way.</h3><p>Your private pool, open around the clock. A sunny dip or a late-night unwind — you decide.</p></div></div></article>
-        <article class="space-card"><button class="photo-button" data-photo="3room" aria-label="View bedroom photograph"><img src="images/3room.webp" width="1440" height="1080" loading="lazy" alt="A spacious bedroom with wooden flooring, a red bedspread and natural light"><span class="photo-expand" aria-hidden="true">↗</span></button><div class="space-caption"><span class="number">02</span><div><h3>Sleep in. Stay a little.</h3><p>Three comfortable bedrooms, air conditioning, cotton linen and room-darkening blinds.</p></div></div></article>
-        <article class="space-card"><button class="photo-button" data-photo="gazebo10" aria-label="View poolside gazebo photograph"><img src="images/gazebo10.webp" width="1080" height="1440" loading="lazy" alt="Covered outdoor seating beside the villa’s private pool"><span class="photo-expand" aria-hidden="true">↗</span></button><div class="space-caption"><span class="number">03</span><div><h3>Let evenings linger.</h3><p>Poolside conversations, outdoor dining and a barbecue with your favourite company.</p></div></div></article>
+        <article class="space-card space-main"><button class="photo-button" data-photo="pool3" aria-label="View private swimming pool photograph"><img src="images/pool3.webp" width="1440" height="1080" loading="lazy" alt="The villa’s private swimming pool"><span class="photo-expand" aria-hidden="true">↗</span></button><div class="space-caption"><span class="number">01</span><div><h3>Pool days. Your way.</h3><p>Your private pool, open around the clock. A sunny dip or a late-night unwind — you decide.</p></div></div></article>
+        <article class="space-card"><button class="photo-button" data-photo="1room2" aria-label="View bedroom photograph"><img src="images/1room2.webp" width="1440" height="1080" loading="lazy" alt="A comfortable bedroom at Mystic Dreamville"><span class="photo-expand" aria-hidden="true">↗</span></button><div class="space-caption"><span class="number">02</span><div><h3>Sleep in. Stay a little.</h3><p>Three comfortable bedrooms, air conditioning, cotton linen and room-darkening blinds.</p></div></div></article>
+        <article class="space-card"><button class="photo-button" data-photo="gazebo7" aria-label="View poolside gazebo photograph"><img src="images/gazebo7.webp" width="1080" height="1440" loading="lazy" alt="Covered outdoor seating beside the villa’s private pool"><span class="photo-expand" aria-hidden="true">↗</span></button><div class="space-caption"><span class="number">03</span><div><h3>Let evenings linger.</h3><p>Poolside conversations, outdoor dining and a barbecue with your favourite company.</p></div></div></article>
       </div>
-      <div class="gallery-heading"><h3>A little more to fall in love with.</h3><span>Tap a photo to explore</span></div>
-      <div class="gallery" id="gallery" aria-label="Villa photo gallery"></div>
+    </section>
+    <section class="gallery-section section" id="gallery-section">
+      <div class="gallery-heading"><div><p class="eyebrow">TAKE A CLOSER LOOK</p><h2>A little more to fall in love with.</h2></div><span>Tap a photo to explore</span></div>
+      <div class="gallery-filters" aria-label="Filter the villa gallery">
+        <button class="is-active" data-gallery-filter="all" aria-pressed="true">All</button>
+        <button data-gallery-filter="rooms" aria-pressed="false">Rooms</button>
+        <button data-gallery-filter="pool" aria-pressed="false">Pool</button>
+        <button data-gallery-filter="bbq" aria-pressed="false">BBQ &amp; Gazebo</button>
+        <button data-gallery-filter="living" aria-pressed="false">Living &amp; Dining</button>
+        <button data-gallery-filter="outdoors" aria-pressed="false">Outdoors</button>
+      </div>
+      <div class="gallery" id="gallery" aria-live="off" aria-label="Villa photo gallery"></div>
     </section>
     <section class="amenities-wrap" id="amenities"><div class="section">
       <div class="section-heading"><div><p class="eyebrow">THE LITTLE THINGS, TAKEN CARE OF</p><h2>Unpack. You’re all set.</h2></div><p>Everyday comforts and a few holiday favourites, ready when you arrive.</p></div>
